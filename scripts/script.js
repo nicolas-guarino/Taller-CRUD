@@ -80,3 +80,22 @@ btnGet1.addEventListener('click', buscarRegistro);
                 });
         }
     });
+
+// MÉTODO DELETE
+async function eliminarRegistro() {
+    const idDelete = inputDelete.value.trim();
+
+    try {
+        const response = await fetch(`${API_URL}/${idDelete}`);
+
+        if (response.ok) {
+            buscarRegistro();
+        } else if (response.status === 404) {
+            results.textContent = 'Error al eliminar el registro';
+        }
+    } catch (error) {
+        console.error('Error:', error);
+    }
+}
+
+btnDelete.addEventListener('click', eliminarRegistro);
