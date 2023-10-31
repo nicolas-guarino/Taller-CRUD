@@ -40,3 +40,42 @@ async function buscarRegistro() {
 }
 
 btnGet1.addEventListener('click', buscarRegistro);
+
+
+// Función para mostrar una alerta de error
+    function showErrorAlert() {
+        alertError.classList.add("show");
+    }
+
+    // Función para ocultar la alerta de error
+    function hideErrorAlert() {
+        alertError.classList.remove("show");
+    }
+
+
+    // Evento para el botón "Agregar"
+    btnPost.addEventListener("click", () => {
+        hideErrorAlert();
+        const nombre = inputPostNombre.value;
+        const apellido = inputPostApellido.value;
+        if (nombre && apellido) {
+            fetch(API_URL, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    name: nombre,
+                    lastname: apellido,
+                }),
+            })
+                .then(() => {
+                    inputPostNombre.value = "";
+                    inputPostApellido.value = "";
+                    loadAndDisplayRecords();
+                })
+                .catch(() => {
+                    showErrorAlert();
+                });
+        }
+    });
