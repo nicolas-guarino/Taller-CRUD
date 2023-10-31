@@ -8,6 +8,7 @@ const btnPost = document.getElementById('btnPost')
 const btnPut = document.getElementById('btnPut')
 const btnDelete = document.getElementById('btnDelete')
 const API_URL = 'https://65417e92f0b8287df1fe69fd.mockapi.io/users'
+const alertError = document.getElementById("alert-error");
 const results = document.getElementById('results');
 
 async function buscarRegistro() {
@@ -72,7 +73,7 @@ btnGet1.addEventListener('click', buscarRegistro);
                 .then(() => {
                     inputPostNombre.value = "";
                     inputPostApellido.value = "";
-                    loadAndDisplayRecords();
+                    buscarRegistro();
                 })
                 .catch(() => {
                     showErrorAlert();
