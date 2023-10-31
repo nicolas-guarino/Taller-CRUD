@@ -30,6 +30,15 @@
     transform: translate(-50%, 0);
 }
 
+.div-registro{
+    margin-bottom: 15px;
+}
+
+.div-registro:last-child{
+    margin-bottom: 0;
+}
+
+
 main {
     min-height: calc(100vh - 210px);
   }

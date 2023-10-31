@@ -8,3 +8,35 @@ const btnPost = document.getElementById('btnPost')
 const btnPut = document.getElementById('btnPut')
 const btnDelete = document.getElementById('btnDelete')
 const API_URL = 'https://65417e92f0b8287df1fe69fd.mockapi.io/users'
+const results = document.getElementById('results');
+
+async function buscarRegistro() {
+    const idGet = inputGet1Id.value.trim();
+
+    try {
+        if (idGet === "") {
+            const response = await fetch(API_URL);
+            const data = await response.json();
+            results.innerHTML = '';
+
+            data.forEach((registro) => {
+                const registroDiv = document.createElement('div');
+                registroDiv.classList.add('div-registro')
+                registroDiv.innerHTML = `ID: ${registro.id}<br>NAME: ${registro.name}<br>LASTNAME: ${registro.lastname}`;
+                results.appendChild(registroDiv);
+            });
+        } else {
+            const response = await fetch(`${API_URL}/${idGet}`);
+            if (response.status === 404) {
+                results.textContent = 'Error al obtener los datos';
+            } else if (response.ok) {
+                const data = await response.json();
+                results.innerHTML = `ID: ${data.id}<br>NAME: ${data.name}<br>LASTNAME: ${data.lastname}`;
+            }
+        }
+    } catch (error) {
+        console.error('Error:', error);
+    }
+}
+
+btnGet1.addEventListener('click', buscarRegistro);
