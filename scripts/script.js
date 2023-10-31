@@ -28,8 +28,8 @@ async function buscarRegistro() {
             });
         } else {
             const response = await fetch(`${API_URL}/${idGet}`);
-            if (response.status === 404) {
-                results.textContent = 'Error al obtener los datos';
+            if (response.status === 500) {
+                results.textContent = 'Error al obtener Usuario, el ID ingresado no existe';
             } else if (response.ok) {
                 const data = await response.json();
                 results.innerHTML = `ID: ${data.id}<br>NAME: ${data.name}<br>LASTNAME: ${data.lastname}`;
