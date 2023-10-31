@@ -101,3 +101,15 @@ async function eliminarRegistro() {
 }
 
 btnDelete.addEventListener('click', eliminarRegistro);
+
+function validarCampos() {
+    btnGet1.disabled = inputGet1Id.value.trim() === "";
+    btnPost.disabled = inputPostNombre.value.trim() === "" || inputPostApellido.value.trim() === "";
+    btnPut.disabled = inputPutId.value.trim() === "";
+    btnDelete.disabled = inputDelete.value.trim() === "";
+}
+
+function mostrarError() {
+    alertError.textContent = "Algo salió mal..."; 
+    alertError.style.display = "block";
+}
