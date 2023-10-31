@@ -86,7 +86,9 @@ async function eliminarRegistro() {
     const idDelete = inputDelete.value.trim();
 
     try {
-        const response = await fetch(`${API_URL}/${idDelete}`);
+        const response = await fetch(`${API_URL}/${idDelete}`, {
+            method: 'DELETE'
+        });
 
         if (response.ok) {
             buscarRegistro();
