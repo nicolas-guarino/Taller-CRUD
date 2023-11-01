@@ -147,7 +147,9 @@ modalPutBtn.addEventListener("click", async function(){
         const response = await fetch(`${API_URL}/${idPut}`, requestOptions);
         const data = await response.json();
 
-
+        if (response.ok){
+            buscarRegistro();
+        }
         for (let i = 0; i < data.length; i) {
 
             const registroDiv = document.createElement('div');
