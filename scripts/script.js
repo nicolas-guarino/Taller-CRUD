@@ -7,6 +7,11 @@ const btnGet1 = document.getElementById('btnGet1')
 const btnPost = document.getElementById('btnPost')
 const btnPut = document.getElementById('btnPut')
 const btnDelete = document.getElementById('btnDelete')
+const modal = document.getElementById("dataModal");
+const modalName = document.getElementById("inputPutNombre");
+const modalLastName = document.getElementById("inputPutApellido");
+const modalPutBtn = document.getElementById("btnSendChanges");
+
 const API_URL = 'https://65417e92f0b8287df1fe69fd.mockapi.io/users'
 const alertError = document.getElementById("alert-error");
 const results = document.getElementById('results');
@@ -113,3 +118,49 @@ function mostrarError() {
     alertError.textContent = "Algo salió mal..."; 
     alertError.style.display = "block";
 }
+
+
+//Actualizar
+btnPut.addEventListener("click", async function(){
+    idPut = inputPutId.value.trim();
+    
+    modal.classList.add("show");
+    modal.style.display = "block";
+    try{
+        const response = await fetch(`${API_URL}/${idPut}`);
+        const data = await response.json();
+        modalName.value = data.name;
+        modalLastName.value = data.lastname;
+    } catch (error){
+        console.error("Error: ", error);
+    }
+
+});
+
+modalPutBtn.addEventListener("click", async function(){
+    try{
+        const requestOptions = {
+            method: "PUT",
+            headers: {"content-type": "application/json"},
+            body: JSON.stringify({name: modalName.value, lastname: modalLastName.value})
+        }
+        const response = await fetch(`${API_URL}/${idPut}`, requestOptions);
+        const data = await response.json();
+
+
+        for (let i = 0; i < data.length; i) {
+
+            const registroDiv = document.createElement('div');
+            registroDiv.classList.add('div-registro')
+            registroDiv.innerHTML = `ID: ${data[i].id}<br>NAME: ${data[i].name}<br>LASTNAME: ${data[i].lastname}`;
+            results.appendChild(registroDiv);
+            
+        }
+        modal.classList.remove("show");
+        modal.style.display = "none";
+
+        
+    } catch(error){
+        console.error("Error: ", error);
+    }
+})
