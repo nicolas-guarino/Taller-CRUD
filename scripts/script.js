@@ -16,6 +16,17 @@ const API_URL = 'https://65417e92f0b8287df1fe69fd.mockapi.io/users'
 const alertError = document.getElementById("alert-error");
 const results = document.getElementById('results');
 
+
+// Función para mostrar una alerta de error
+function showErrorAlert() {
+    alertError.classList.remove("d-none");
+}
+
+// Función para ocultar la alerta de error
+function hideErrorAlert() {
+    alertError.classList.add("d-none");
+}
+
 async function buscarRegistro() {
     const idGet = inputGet1Id.value.trim();
 
@@ -34,8 +45,10 @@ async function buscarRegistro() {
         } else {
             const response = await fetch(`${API_URL}/${idGet}`);
             if (response.status === 500) {
+                showErrorAlert();
                 results.textContent = 'Error al obtener Usuario, el ID ingresado no existe';
             } else if (response.ok) {
+                hideErrorAlert();
                 const data = await response.json();
                 results.innerHTML = `ID: ${data.id}<br>NAME: ${data.name}<br>LASTNAME: ${data.lastname}`;
             }
@@ -46,18 +59,6 @@ async function buscarRegistro() {
 }
 
 btnGet1.addEventListener('click', buscarRegistro);
-
-
-// Función para mostrar una alerta de error
-    function showErrorAlert() {
-        alertError.classList.add("show");
-    }
-
-    // Función para ocultar la alerta de error
-    function hideErrorAlert() {
-        alertError.classList.remove("show");
-    }
-
 
     // Evento para el botón "Agregar"
     btnPost.addEventListener("click", () => {
@@ -107,17 +108,22 @@ async function eliminarRegistro() {
 
 btnDelete.addEventListener('click', eliminarRegistro);
 
-function validarCampos() {
-    btnGet1.disabled = inputGet1Id.value.trim() === "";
-    btnPost.disabled = inputPostNombre.value.trim() === "" || inputPostApellido.value.trim() === "";
-    btnPut.disabled = inputPutId.value.trim() === "";
-    btnDelete.disabled = inputDelete.value.trim() === "";
-}
 
-function mostrarError() {
-    alertError.textContent = "Algo salió mal..."; 
-    alertError.style.display = "block";
-}
+inputPutId.addEventListener("input", () => {
+    if (inputPutId.value.trim() === "") {
+        btnPut.disabled = true;
+    } else {
+        btnPut.disabled = false;
+    }
+});
+
+inputDelete.addEventListener("input", () => {
+    if (inputDelete.value.trim() === "") {
+        btnDelete.disabled = true;
+    } else {
+        btnDelete.disabled = false;
+    }
+});
 
 
 //Actualizar
